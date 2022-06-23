@@ -74,9 +74,9 @@ const ProductListView = ({data, page, pages, showProducts, onAxios}:IProductList
     ))
     }
       <View style={styles.paginas} >
-      <Button disabled={ page <= 1 && true} onPress={()=>{onAxios('page?'+(page-1))}}>Anterior</Button>
+      <Button disabled={ page <= 1 && true} onPress={()=>{onAxios('?page='+(page-1))}}>Anterior</Button>
       <Text>Pagina { page } de { pages }</Text>
-      <Button disabled={page >= pages && true } onPress={()=>{onAxios('page?'+(page+1))}}>Siguiente</Button>
+      <Button disabled={page >= pages && true } onPress={()=>{onAxios('?page='+(page+1))}}>Siguiente</Button>
       </View>
     </View>
     ):(
