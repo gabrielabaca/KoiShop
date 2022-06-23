@@ -12,10 +12,6 @@ interface ProductosRequestAction {
 interface ProductosSuccessAction {
     type: typeof PRODUCTOS_SUCCESS;
     data: [];
-    page: number;
-    pages: number;
-    rowsPerPage: number;
-    total: number;
 }
   
 interface ProductosFailureAction {
@@ -40,43 +36,14 @@ export interface ProductosState {
     data: ProductoItem[];
     page: number;
     pages: number;
-    rowsPerPage: string;
+    rowsPerPage: number;
     total: number;
     error: string;
     cart: number;
   }
 
 const initialState: ProductosState = {
-    data: [
-      {
-        name: 'Producto1',
-        price: 125,
-        stock: 10,
-        id: '0001',
-        image: 'https://source.unsplash.com/random?sig=1'
-      },
-      {
-        name: 'Producto2',
-        price: 126,
-        stock: 8,
-        id: '0002',
-        image: 'https://source.unsplash.com/random?sig=1'
-      },
-      {
-        name: 'Producto3',
-        price: 127,
-        stock: 3,
-        id: '0003',
-        image: 'https://source.unsplash.com/random?sig=1'
-      },
-      {
-        name: 'Producto4',
-        price: 128,
-        stock: 0,
-        id: '0004',
-        image: 'https://source.unsplash.com/random?sig=1'
-      }
-    ],
+    data: [],
     page:1,
     pages: 1000000,
     rowsPerPage:10,
@@ -92,11 +59,11 @@ export default (state: ProductosState = initialState, action: InitActionTypes): 
       case PRODUCTOS_SUCCESS:
         return {
           ...state,
-          data: action.data,
-          page: action.page,
-          pages: action.pages,
-          rowsPerPage: action.rowsPerPage,
-          total: action.total,
+          data: action.data.data,
+          page: action.data.page,
+          pages: action.data.pages,
+          rowsPerPage: action.data.rowsPerPage,
+          total: action.data.total,
         };
   
       case PRODUCTOS_FAILURE:
@@ -116,5 +83,5 @@ export default (state: ProductosState = initialState, action: InitActionTypes): 
   };
 
 
-  export const productosRequest = (callback: (data: []) => void) => ({ type: PRODUCTOS_REQUEST, callback });
+  export const updateProducts = (data:[]) => ({ type: PRODUCTOS_SUCCESS, data });
   export const updateCart = (cart:number) => ({type: UPDATE_CART, cart})

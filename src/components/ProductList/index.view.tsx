@@ -1,15 +1,16 @@
 import * as React from "react";
-import { ScrollView, View, Image} from 'react-native';
+import { ScrollView, View, Image, Modal} from 'react-native';
 import { SearchBar, Text } from '@rneui/themed';
 import { Button, Card } from "@rneui/base";
 import AddToCart from "../AddToCart/";
 import { styles } from './index.style';
-import { useState, useEffect } from "react";
+import { useState, useEffect, Component } from "react";
 import { useHooks } from "../../hooks";
 import AsyncStorage from "@react-native-community/async-storage";
+import { IProductListProps } from "./index.type";
 
 
-const ProductListView = ({data, page, pages}) => {
+const ProductListView = ({data, page, pages, showProducts, onAxios}:IProductListProps) => {
   const [value, setValue] = useState('')
   const { fetchUpdateCart } = useHooks();
     
@@ -20,8 +21,9 @@ const ProductListView = ({data, page, pages}) => {
     },[AddToCart])
 
   useEffect(() => {
-    console.log('Busqueda:', value)
-  },[value])
+    onAxios()
+  },[])
+
 
   return (
     <>
@@ -29,7 +31,7 @@ const ProductListView = ({data, page, pages}) => {
       containerStyle={{backgroundColor:'white'}}
       inputStyle={{color:'#fff'}}
       loadingProps={{}}
-      onChangeText={newVal => setValue(newVal)}
+      onChangeText={val => setValue(val)}
       placeholder="Buscar...."
       placeholderTextColor="#999"
       round
@@ -37,9 +39,13 @@ const ProductListView = ({data, page, pages}) => {
       cancelButtonTitle="Cancelar"
       value={value}
     />
+    <Button title={'Buscar'} onPress={()=>{onAxios(value)}} />
     <ScrollView style={styles.contentView}>
     
-    {data.map(({ name, price, stock, id, image }) => (
+    {showProducts ? (
+      <View>
+      {
+      data.map(({ name, price, stock, id, image }) => (
       <Card key={id}>
       <Card.Title> { name } </Card.Title>
       <Card.Divider />
@@ -65,13 +71,21 @@ const ProductListView = ({data, page, pages}) => {
           </View>
         </View>
       </Card>
-    ))}
-    
+    ))
+    }
       <View style={styles.paginas} >
-        <Button disabled={ page <= 1 && true} onPress={()=>{console.log('CLICK ANTERIOR')}}>Anterior</Button>
-        <Text>Pagina { page } de { pages }</Text>
-        <Button disabled={page >= pages && true } onPress={()=>{console.log('CLick SIGUIENTE')}}>Siguiente</Button>
+      <Button disabled={ page <= 1 && true} onPress={()=>{onAxios('page?'+(page-1))}}>Anterior</Button>
+      <Text>Pagina { page } de { pages }</Text>
+      <Button disabled={page >= pages && true } onPress={()=>{onAxios('page?'+(page+1))}}>Siguiente</Button>
       </View>
+    </View>
+    ):(
+      <View>
+        <Text>NO HAY PRODUCTOS</Text>
+      </View>
+    )
+    }
+      
     </ScrollView>
     
   </>
