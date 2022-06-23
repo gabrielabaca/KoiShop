@@ -1,10 +1,15 @@
 import * as React from "react";
 import { Header as MHeader, Icon, withBadge,} from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-const BadgedIcon = withBadge(15, {value:15, status:'success'})(Icon);
+import { IHeaderProps } from "./index.type";
 
-const HeaderView = () => {
- const navigation  = useNavigation();
+
+
+const HeaderView = ({cart}:IHeaderProps) => {
+
+  const BadgedIcon = withBadge(15, {value:cart, hidden:(cart == 0 ? true: false), status:'success'})(Icon);
+  
+  const navigation  = useNavigation();
   return (
     <>
     <MHeader
@@ -28,12 +33,14 @@ const HeaderView = () => {
       linearGradientProps={{}}
       placement="center"
       rightComponent={
+        
         <BadgedIcon 
           type='font-awesome-5'
           name="shopping-cart" 
           color='#fff'
           onPress={()=> navigation.navigate( 'Cart' )}
-        />}
+        />
+        }
       rightContainerStyle={{paddingRight:15}}
       statusBarProps={{}}
     />

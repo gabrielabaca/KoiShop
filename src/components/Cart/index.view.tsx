@@ -12,7 +12,6 @@ const CartView = ({data, onQuitar, onRead}:ICartProps) => {
   },[data])
   return (
     <>
-    <Button title={'BORRAR CACHE'}  onPress={() =>{AsyncStorage.clear()}} />
     {data ? 
     (
       <View>

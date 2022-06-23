@@ -5,10 +5,19 @@ import { Button, Card } from "@rneui/base";
 import AddToCart from "../AddToCart/";
 import { styles } from './index.style';
 import { useState, useEffect } from "react";
+import { useHooks } from "../../hooks";
+import AsyncStorage from "@react-native-community/async-storage";
 
 
 const ProductListView = ({data, page, pages}) => {
   const [value, setValue] = useState('')
+  const { fetchUpdateCart } = useHooks();
+    
+  useEffect(() => {
+      AsyncStorage.getAllKeys().then((datacart)=>{
+          fetchUpdateCart(datacart.length)
+      })    
+    },[AddToCart])
 
   useEffect(() => {
     console.log('Busqueda:', value)

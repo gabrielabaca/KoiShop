@@ -3,7 +3,7 @@ import { ProductoItem } from "../types/store";
 export const PRODUCTOS_REQUEST = 'PRODUCTOS_REQUEST';
 export const PRODUCTOS_SUCCESS = 'PRODUCTOS_SUCCESS';
 export const PRODUCTOS_FAILURE = 'PRODUCTOS_FAILURE';
-
+export const UPDATE_CART = 'UPDATE_CART';
 
 interface ProductosRequestAction {
     type: typeof PRODUCTOS_REQUEST;
@@ -12,32 +12,38 @@ interface ProductosRequestAction {
 interface ProductosSuccessAction {
     type: typeof PRODUCTOS_SUCCESS;
     data: [];
-    page: Number;
-    pages: Number;
-    rowsPerPage: Number;
-    total: Number;
+    page: number;
+    pages: number;
+    rowsPerPage: number;
+    total: number;
 }
   
 interface ProductosFailureAction {
     type: typeof PRODUCTOS_FAILURE;
-    error: String;
+    error: string;
 }
 
+interface UpdateCartAction {
+  type: typeof UPDATE_CART;
+  cart: number;
+}
 
 type InitActionTypes =
   | ProductosRequestAction
   | ProductosSuccessAction
   | ProductosFailureAction
+  | UpdateCartAction
 
 
 
 export interface ProductosState {
     data: ProductoItem[];
-    page: Number;
-    pages: Number;
-    rowsPerPage: Number;
-    total: Number;
-    error: String;
+    page: number;
+    pages: number;
+    rowsPerPage: string;
+    total: number;
+    error: string;
+    cart: number;
   }
 
 const initialState: ProductosState = {
@@ -76,6 +82,7 @@ const initialState: ProductosState = {
     rowsPerPage:10,
     total:10000000,
     error: '',
+    cart: 0
 };
 
 
@@ -97,7 +104,12 @@ export default (state: ProductosState = initialState, action: InitActionTypes): 
           ...state,
           error: action.error
         };
-  
+      
+      case UPDATE_CART:
+        return {
+          ...state,
+          cart: action.cart
+        }
       default:
         return state;
     }
@@ -105,3 +117,4 @@ export default (state: ProductosState = initialState, action: InitActionTypes): 
 
 
   export const productosRequest = (callback: (data: []) => void) => ({ type: PRODUCTOS_REQUEST, callback });
+  export const updateCart = (cart:number) => ({type: UPDATE_CART, cart})

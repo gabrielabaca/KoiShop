@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import CartView from './index.view'
 import AsyncStorage from '@react-native-community/async-storage';
-
+import { useHooks } from '../../hooks/'
 
 const CartContainer = () =>{
     const [data, setData] = useState()
+    const { fetchUpdateCart } = useHooks();
 
     const readData = async () => {
         try {
         const result: any = [];
         const keys = await AsyncStorage.getAllKeys();
-        
+
+            fetchUpdateCart(keys.length)
+
             for (const key of keys) {
                 const val = await AsyncStorage.getItem(key);
                 result.push({

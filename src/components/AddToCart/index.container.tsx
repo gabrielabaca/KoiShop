@@ -2,11 +2,13 @@ import React from 'react'
 import AddToCartView from './index.view'
 import { useState } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useHooks } from '../../hooks';
 
 const AddToCartContainer = ( data ) =>{
 
   const [cantidad, setCantidad ] = useState(1)
-
+  const { fetchUpdateCart } = useHooks();
+  
   const handleCantidad = (accion:string) => {
     if(accion == 'add' && cantidad < data.stock){
       setCantidad(cantidad+1)
@@ -34,8 +36,11 @@ const AddToCartContainer = ( data ) =>{
         cart.push(itemcart)
         AsyncStorage.setItem(data.id,JSON.stringify(itemcart));
       }
-      console.log("Item Agregado al Carrito")
+      AsyncStorage.getAllKeys().then((datacart)=>{
+        fetchUpdateCart(datacart.length)
+      })
     })
+
     .catch((err)=>{
       console.log(err)
     })
