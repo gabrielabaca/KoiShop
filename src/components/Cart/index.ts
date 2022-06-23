@@ -1,3 +1,3 @@
-import Cart from './index.container';
+import CartContainer from './index.container';
 
-export default Cart
+export default CartContainer

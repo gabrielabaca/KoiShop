@@ -10,19 +10,7 @@ export const styles = StyleSheet.create({
       flexDirection: 'column', 
       justifyContent: 'center',
     },
-    pricingAddCart:{
-      display:'flex', 
-      flexDirection:'row',
-      justifyContent:'center'
-    },
-    pricingCantidad:{
-      display:'flex', 
-      flexDirection:'row', 
-      justifyContent:'center',
-      alignItems:'center', 
-      marginRight:5, 
-      marginLeft:5
-    },
+    
     paginas: {
       flex: 1,
       paddingLeft:25,
