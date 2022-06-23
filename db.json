@@ -1,0 +1,36 @@
+{
+    "data": [
+        {
+        "name": "Producto1",
+        "price": "125",
+        "stock": "5",
+        "id": "001",
+        "image": "https://source.unsplash.com/random?sig=1",
+        },
+        {
+        "name": "Producto2",
+        "price": "126",
+        "stock": "5",
+        "id": "002",
+        "image": "https://source.unsplash.com/random?sig=1",
+        },
+        {
+        "name": "Producto3",
+        "price": "125",
+        "stock": "5",
+        "id": "003",
+        "image": "https://source.unsplash.com/random?sig=1",
+        },
+        {
+        "name": "Producto4",
+        "price": "125",
+        "stock": "5",
+        "id": "004",
+        "image": "https://source.unsplash.com/random?sig=1",
+        }
+    ],
+    "page": 1,
+    "pages": 1000000,
+    "rowsPerPage": 10,
+    "total": 10000000
+}
